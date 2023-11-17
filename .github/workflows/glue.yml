@@ -41,8 +41,15 @@ jobs:
     - name: Build
       run: dotnet build -c ${{ matrix.configuration }} 'FRB\FRBDK\Glue\Glue with All.sln'
 
+    - name: Prepare package
+      run: |
+        mkdir _pack
+        move FRB/FRBDK/Glue/Glue/bin/${{ matrix.configuration }} _pack/Glue
+        move Gum/Gum/bin/${{ matrix.configuration }}/Data _pack/Gum
+        echo 'start "" "Glue/Glue.exe"' > '_pack/Run FlatRedBall.bat'
+
     - name: Package
       uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.configuration }}
-        path: FRB/FRBDK/Glue/Glue/bin/${{ matrix.configuration }}
+        path: _pack
