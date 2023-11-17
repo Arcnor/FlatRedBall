@@ -38,8 +38,11 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Build
+    - name: Build FRB
       run: dotnet build -c ${{ matrix.configuration }} 'FRB\FRBDK\Glue\Glue with All.sln'
+      
+    - name: Build Gum
+      run: dotnet build -c ${{ matrix.configuration }} 'Gum\Gum.sln'
 
     - name: Prepare package
       run: |
